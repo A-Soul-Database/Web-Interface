@@ -9,7 +9,7 @@ export default defineConfig({
   hash: true,
   base:'./',
   publicPath: './',
-  outputPath: '../web',
+  outputPath: '../../webs/web',
   history:{type:'hash'},
   exportStatic:true,
   // outputPath: ''

@@ -21,9 +21,6 @@ const GlobalHeaderRight = () => {
       <Menu.Item key="4">
         <a target="_blank" href="https://asoulwiki.com/">一个魂维基</a>
       </Menu.Item>
-      <Menu.Item key="5">
-        <a target="_blank" href="https://www.bilibili.com/video/BV1wo4y1X7Tk?p=1">宇宙的终点站</a>
-      </Menu.Item>
     </Menu>
   );
   return (
