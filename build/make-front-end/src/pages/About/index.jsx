@@ -51,20 +51,20 @@ const IconFont = createFromIconfontCN({
           </Row>
 
         <Title level={1} align="middle" style={{"marginTop":"50px"}}>技术文档</Title>
-        <Paragraph align="middle">本产品由React编写，主要以antd(Ant Design-Pro),CrgC(Courageous Cattle)为前端脚手架进行搭建，并配以IzJJ(Iz-euJ-euJ)所提供的云服务进行网页优化</Paragraph>
-        <Paragraph align="middle">以下为所涉及到的前端框架的链接，在使用本数据库之前请<b>务必</b>反复查看并确保无误。若不遵守本规定，由此产生的一切法律后果由使用者本人承担</Paragraph>
+        <Paragraph align="middle">本产品由React编写，主要以antd(Ant Design-Pro)</Paragraph>
+        {/* <Paragraph align="middle">以下为所涉及到的前端框架的链接，在使用本数据库之前请<b>务必</b>反复查看并确保无误。若不遵守本规定，由此产生的一切法律后果由使用者本人承担</Paragraph> */}
         <Row><Col md={{"offset":6}}><li>前端脚手架:</li></Col></Row>
         <Row><Col md={{"offset":7}}><li>Antd(Ant Design-Pro):<a href="https://ant.design/docs/react/introduce-cn"><LinkOutlined/>文档链接</a></li></Col></Row>
-        <Row><Col md={{"offset":7}}><li>CrgC(Courageous Cattle):<a href="https://www.bilibili.com/video/BV14y4y1M7cC"><LinkOutlined/>文档链接</a>(<b>***使用前必看***</b>)</li></Col></Row>
-        <Row><Col md={{"offset":6}}><li>云服务提供商:</li></Col></Row>
-        <Row><Col md={{"offset":7}}><li>IzJJ(Iz-euJ-euJ):<a href="https://www.bilibili.com/video/BV1kg411778T"><LinkOutlined/>文档链接</a>(<b>***使用前必看***</b>)</li></Col></Row>
+        {/* <Row><Col md={{"offset":7}}><li>CrgC(Courageous Cattle):<a href="https://www.bilibili.com/video/BV14y4y1M7cC"><LinkOutlined/>文档链接</a>(<b>***使用前必看***</b>)</li></Col></Row> */}
+        {/* <Row><Col md={{"offset":6}}><li>云服务提供商:</li></Col></Row> */}
+        {/* <Row><Col md={{"offset":7}}><li>IzJJ(Iz-euJ-euJ):<a href="https://www.bilibili.com/video/BV1kg411778T"><LinkOutlined/>文档链接</a>(<b>***使用前必看***</b>)</li></Col></Row> */}
 
         <Title level={1} align="middle" style={{"marginTop":"50px"}}>未来规划</Title>
         <Paragraph align="middle" >
           <div style={{"width":"70%"}}>
             将该网站部署到真正的服务器上而非如今的Github Pages上，将数据库做成真正的数据库而非如今的json文件夹。
             一句话：希望一个魂们能有更好的Asoul Database，不像今天这个这么卡，我超。
-            在网站开发过程中使用到了闭源的前端框架Crgc(<a href='https://www.bilibili.com/video/BV14y4y1M7cC'>Courageous Cattle</a>)和云服务提供商IzJJ(<a href='https://www.bilibili.com/video/BV1kg411778T'>Iz-euJ-euJ</a>),在此特别鸣谢。
+            请来看看大哥的隔岸吧：https://www.bilibili.com/video/BV1M64y1a7zh?from=search&seid=1914213889857564488&spm_id_from=333.337.0.0
           </div>
         </Paragraph>
         <Paragraph></Paragraph>
@@ -72,7 +72,7 @@ const IconFont = createFromIconfontCN({
           <Col xs={24} md={24} align="middle">
             <Card style={{"width":"200px","height":"200px","borderRadius":"10px"}}>
               <Image src="./cheat.png"></Image>
-              诈骗链接，爱扫不扫🤗
+              红色高跟，爱扫不扫🤗
             </Card>
           </Col>
         </Row>
