@@ -42,6 +42,9 @@ function getSubtitles(bv){
   try{
     clip = parseInt(mainJson[index]["clip"]);
     month = mainJson[index]["date"].split("-")[0];
+    if(mainJson[index]["date"].split("-").length === 3){
+      month = mainJson[index]["date"].split("-")[1]; //对于跨年数据,Main.json对其日期从 12-01 修改为了 21-12-01 所以这里要判断一下月份,否则请求404
+    }
   }catch{
     console.error("clip and month parse fault in bv: "+bv);
   }
