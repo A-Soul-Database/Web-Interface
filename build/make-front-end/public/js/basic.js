@@ -70,7 +70,8 @@ export default {
 }
 
 
-const insertionJustable = ["scene","staff","type"]//可以用相交法判断的关键字数组
+const insertionJustable = ["scene","staff","type","platform"]//可以用相交法判断的关键字数组
+//2022-1-2:平台格式变化，由原来的单字符“B”变为字符串数组
 
 // export function match(queryJson,json){
 //     for(let keyword in queryJson){
@@ -145,13 +146,13 @@ export function match(queryJson,json){
         }
 
         // keyword = "platform"
-        {
-            if(queryJson["platform"].indexOf(json["platform"])===-1){
+        // {
+        //     if(queryJson["platform"].indexOf(json["platform"])===-1){
                 
-                // console.log("platform not match");
-                return false;
-            }//json里的platform并非数组，而是一个字符，B或者D
-        }
+        //         // console.log("platform not match");
+        //         return false;
+        //     }//json里的platform是一个字符串数组["B","D"],"B"代表b站,"D"代表抖音
+        // }
         for(let keyword of insertionJustable){
             if(!isInsertion(queryJson[keyword],json[keyword])){
                 // console.log("insert not match");
