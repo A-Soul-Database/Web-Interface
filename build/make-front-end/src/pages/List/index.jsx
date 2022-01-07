@@ -11,8 +11,25 @@ import Highlighter from 'react-highlight-words';
 
 const sourceUrl = config.sourceUrl;
 console.log(sourceUrl);
+/*
 const MainUrl = sourceUrl+"/db/2021/main.json"; // main.json文件url,直接从网页拿
 const Coverurl = sourceUrl+"/db/2021/Cover.json"; //cover.json文件url,直接从网页拿
+let mainJson = getJsonData(MainUrl);
+let coverJson = getJsonData(Coverurl);
+*/
+//从main.json文件中获取数据
+let Year_Index_Json = getJsonData(sourceUrl+"/db/main.json"); //年度的main.json 索引
+const years = Year_Index_Json.LiveClip;
+let MainUrl = "";
+let Coverurl = "";
+let mainJson = [];
+let coverJson = [];
+for(let year_Item of years){
+    MainUrl = sourceUrl+"/db/"+year_Item+"/main.json";
+    mainJson = mainJson.concat(getJsonData(MainUrl));
+    Coverurl = sourceUrl+"/db/"+year_Item+"/Cover.json";
+    coverJson = coverJson.concat(getJsonData(Coverurl));
+}
 
 const CheckboxGroup = Checkbox.Group;
 const Panel = Collapse.Panel;
@@ -26,10 +43,7 @@ const highlightColor = "yellow";
   
 // }
 // let mainJson = [];
-let mainJson = getJsonData(MainUrl);
 
-
-let coverJson = getJsonData(Coverurl);
 
 let InitialMainJson = [];
 

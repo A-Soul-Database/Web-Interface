@@ -23,12 +23,31 @@ const { Meta } = Card;
 const {Title,Text} = Typography;
 
 const sourceUrl = config.sourceUrl;
+
+let Year_Index_Json = getJsonData(sourceUrl+"/db/main.json"); //年度的main.json 索引
+const years = Year_Index_Json.LiveClip;
+let MainUrl = "";
+let searchUrl = "";
+let indexerUrl = "";
+let indexerList = [];
+let mainJson = [];
+let searchJson = [];
+for(let year_Item of years){
+    MainUrl = sourceUrl+"/db/"+year_Item+"/main.json";
+    searchUrl = sourceUrl+"/db/"+year_Item+"/search.json";
+    indexerUrl = sourceUrl+"/db/"+year_Item+"/indexer.json";
+    mainJson = mainJson.concat(getJsonData(MainUrl));
+    searchJson = searchJson.concat(getJsonData(searchUrl));
+    indexerList = indexerList.concat(getJsonData(indexerUrl));
+}
+/*
 let searchJson = getJsonData(sourceUrl+"/db/2021/search.json");
 let mainJson = getJsonData(sourceUrl+"/db/2021/main.json");
 let indexerList = getJsonData(sourceUrl+"/db/2021/indexer.json");
-
+*/
 const highlightColor = "yellow";
 
+function PurifyYear(a){return "20"+a;} // 文件目录是2022 , main.json 是22
 
 function getSubtitles(bv){
   //TODO:加强鲁棒性
@@ -39,11 +58,14 @@ function getSubtitles(bv){
   }
   let clip = 1;
   let month = "";
+  let year = "";
   try{
     clip = parseInt(mainJson[index]["clip"]);
-    month = mainJson[index]["date"].split("-")[0];
+    month = mainJson[index]["date"].split("-")[1];
+    year = PurifyYear("21"); //默认2021
     if(mainJson[index]["date"].split("-").length === 3){
       month = mainJson[index]["date"].split("-")[1]; //对于跨年数据,Main.json对其日期从 12-01 修改为了 21-12-01 所以这里要判断一下月份,否则请求404
+      year = PurifyYear(mainJson[index]["date"].split("-")[0]);
     }
   }catch{
     console.error("clip and month parse fault in bv: "+bv);
@@ -55,7 +77,7 @@ function getSubtitles(bv){
   for(let i=0;i<clip;i++) subtitles[i] = [];
   if(clip===1){
       let srt = "";
-      let url = sourceUrl+"/db/2021/"+month+"/srt/"+bv+".srt";
+      let url = sourceUrl+"/db/"+year+"/"+month+"/srt/"+bv+".srt";
       try{
         srt = getData(url);
       }catch{
@@ -72,7 +94,7 @@ function getSubtitles(bv){
   }else{
       for(var i =1;i<clip+1;i++){
           let srt = "";
-          let url = sourceUrl+"/db/2021/"+month+"/srt/"+bv+"-"+i.toString()+".srt";
+          let url = sourceUrl+"/db/"+year+"/"+month+"/srt/"+bv+"-"+i.toString()+".srt";
           try{
             srt = getData(url);
           }catch{
