@@ -37,9 +37,10 @@ for(let year_Item of years){
     searchUrl = sourceUrl+"/db/"+year_Item+"/search.json";
     indexerUrl = sourceUrl+"/db/"+year_Item+"/indexer.json";
     mainJson = mainJson.concat(getJsonData(MainUrl));
-    searchJson = searchJson.concat(getJsonData(searchUrl));
     indexerList = indexerList.concat(getJsonData(indexerUrl));
+    searchJson = Object.assign(searchJson,getJsonData(searchUrl));
 }
+console.log(searchJson);
 /*
 let searchJson = getJsonData(sourceUrl+"/db/2021/search.json");
 let mainJson = getJsonData(sourceUrl+"/db/2021/main.json");
