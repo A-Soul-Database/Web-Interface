@@ -28,14 +28,14 @@ for(let year_Item of years){
     MainUrl = sourceUrl+"/db/"+year_Item+"/main.json";
     mainJson = mainJson.concat(getJsonData(MainUrl));
     Coverurl = sourceUrl+"/db/"+year_Item+"/Cover.json";
-    coverJson = coverJson.concat(getJsonData(Coverurl));
+    coverJson = Object.assign(coverJson,getJsonData(Coverurl));
 }
 
 const CheckboxGroup = Checkbox.Group;
 const Panel = Collapse.Panel;
 const { Meta } = Card;
 const {Title,Text} = Typography;
-
+console.log(coverJson[0]);
 const highlightColor = "yellow";
 
 
