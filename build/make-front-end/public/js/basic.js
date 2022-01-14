@@ -63,7 +63,7 @@ const sourceUrls =
     "https://raw.githubusercontent.com/peterpei1186861238/A-Soul-Database/main",
     "https://cdn.jsdelivr.net/gh/A-Soul-Database/A-Soul-Data@latest",
     ]
-const urlChoice = 0;
+const urlChoice = 2;
 export default {
     RunOnLocal:urlChoice !== 0,//当urlChoice不为0时，说明工程在本地跑
     sourceUrl:sourceUrls[urlChoice]

@@ -83,6 +83,35 @@ export default () => {
             <Row><Col align="middle" span={24}>进入字幕库</Col></Row>
           </Button>
         </Col>
+        
+        
+        <Col xs={24} md={12} align="middle">
+          <Button
+            onMouseEnter={(e)=>{setColorTwo("#D9D9D9")}}
+            onMouseLeave={(e)=>{setColorTwo("#737373")}}
+            href={"https://livedb.asoulfan.com/rangeDownload/index.html"}
+            style={{
+              "borderRadius":"20px",
+              "width":"300px",
+              "height":"300px",
+              "backgroundColor":"#1F1F1F"
+            }}
+            
+            
+          >
+            <Row style={{"marginTop":"50px"}}>
+              <Col span={24} align="middle">
+                <ProfileOutlined 
+                  style={{
+                    fontSize:"200px",
+                    color:colorTwo, 
+                  }}/>
+              </Col>
+            </Row>
+            <Row><Col align="middle" span={24}>视频分段下载</Col></Row>
+          </Button>
+        </Col>
+
       </Row>
     </PageContainer>
   );
