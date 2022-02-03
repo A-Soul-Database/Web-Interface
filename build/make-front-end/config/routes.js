@@ -14,25 +14,18 @@ export default [
     name: '视频库',
     icon: 'icon-table',
     component: './List',
-    routes: [
-      {
-      },
-      {
-        component: './404',
-      },
-    ],
   },
-  // {
-  //   name: '搜索',
-  //   icon: 'search',
-  //   path: '/search',
-  //   component: './Search',
-  // },
   {
     name: '字幕库',
     icon: 'profile',
     path: '/subtitle',
     component: './Subtitle',
+  },
+  {
+    name: '分段下载',
+    icon: 'icon-play',
+    path: '/range',
+    component: './Range',
   },
   {
     name: '关于',

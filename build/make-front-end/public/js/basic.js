@@ -60,13 +60,18 @@
 const sourceUrls = 
     [
     "https://livedb.asoulfan.com",
-    "https://raw.githubusercontent.com/peterpei1186861238/A-Soul-Database/main",
+    "https://raw.githubusercontent.com/A-Soul-Database/A-Soul-Data/main",
     "https://cdn.jsdelivr.net/gh/A-Soul-Database/A-Soul-Data@latest",
+    "https://gitee.com/lairq/A-Soul-Data/raw/main"
     ]
-const urlChoice = 0;
+
+const queryPort = "8001";
+const queryAPI = "http://110.42.138.63:"+queryPort+"/sub_search";
+const urlChoice = 2;
 export default {
-    RunOnLocal:urlChoice !== 0,//当urlChoice不为0时，说明工程在本地跑
-    sourceUrl:sourceUrls[urlChoice]
+    RunOnLocal:urlChoice !== 1,//当urlChoice不为0时，说明工程在本地跑
+    sourceUrl:sourceUrls[urlChoice],
+    queryAPI: queryAPI,
 }
 
 
@@ -198,6 +203,18 @@ export function getJsonData(url){
     let r;
     try{r = JSON.parse(xhr.responseText);}catch(e){r = {"title":"error"}}finally{return r}
   }
+
+export function postJsonData(url,para){ //para是一个dict
+    //通过XMLHttpRequest与api通信,同步阻塞式
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST",url,false);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let data = JSON.stringify(para)
+    xhr.send(data);
+    let r;
+    try{r = JSON.parse(xhr.responseText);}catch(e){r = {"title":"error"}}finally{return r}
+}
+
 export function getData(url){
     //通过XMLHttpRequest获取cdn中的版本,同步阻塞式
     var xhr = new XMLHttpRequest();

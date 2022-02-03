@@ -2,7 +2,7 @@ import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Alert, Typography,Row,Col, Button } from 'antd';
 import { useIntl, FormattedMessage } from 'umi';
-import {TableOutlined,createFromIconfontCN, ProfileOutlined} from '@ant-design/icons';
+import {TableOutlined,createFromIconfontCN, ProfileOutlined, PlayCircleOutlined} from '@ant-design/icons';
 import config from "../../../public/js/basic.js";
 const {Text,Title}  = Typography;
 const IconFont = createFromIconfontCN({
@@ -19,6 +19,7 @@ export default () => {
   // const intl = useIntl();
   const [colorOne,setColorOne] = React.useState("#737373");
   const [colorTwo,setColorTwo] = React.useState("#737373");
+  const [colorThree,setColorThree] = React.useState("#737373");
   return (
     <PageContainer>
       <Title align="middle" >Asoul二创切片的有力助手，免费且开源</Title>
@@ -83,9 +84,7 @@ export default () => {
             <Row><Col align="middle" span={24}>进入字幕库</Col></Row>
           </Button>
         </Col>
-        
-        
-        <Col xs={24} md={12} align="middle">
+        {/* <Col xs={24} md={12} align="middle">
           <Button
             onMouseEnter={(e)=>{setColorTwo("#D9D9D9")}}
             onMouseLeave={(e)=>{setColorTwo("#737373")}}
@@ -110,9 +109,41 @@ export default () => {
             </Row>
             <Row><Col align="middle" span={24}>视频分段下载</Col></Row>
           </Button>
-        </Col>
+        </Col> */}
 
       </Row>
+      <Row 
+        style={{
+          "height":"300px",
+          "marginTop":"40px"
+        }}
+        gutter={[16,32]}
+      >
+      <Col xs={24} md={12} align="middle">
+          <Button
+            onMouseEnter={(e)=>{setColorThree("#D9D9D9")}}
+            onMouseLeave={(e)=>{setColorThree("#737373")}}
+            href={basicHref+"#/./range"}
+            style={{
+              "borderRadius":"20px",
+              "width":"300px",
+              "height":"300px",
+              "backgroundColor":"#1F1F1F"
+            }}
+          >
+            <Row style={{"marginTop":"50px"}}>
+              <Col span={24} align="middle">
+                <PlayCircleOutlined 
+                  style={{
+                    fontSize:"200px",
+                    color:colorThree, 
+                  }}/>
+              </Col>
+            </Row>
+            <Row><Col align="middle" span={24}>视频分段下载</Col></Row>
+          </Button>
+        </Col>
+        </Row>
     </PageContainer>
   );
 };

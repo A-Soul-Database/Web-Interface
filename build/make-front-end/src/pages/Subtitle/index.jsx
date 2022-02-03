@@ -1,25 +1,13 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Alert, Typography,Avatar,Row,Col,Checkbox,Collapse,Table,Input, Button,Modal, ConfigProvider,Anchor } from 'antd';
+import { Card, Typography,Avatar,Row,Col,Checkbox,Collapse,Table,Input, Button,Modal, ConfigProvider,message } from 'antd';
 import { InfoCircleOutlined, UndoOutlined, ClearOutlined, SearchOutlined,CaretUpFilled,CaretDownFilled } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-import {reverseArray,getJsonData,getData} from "../../../public/js/basic.js";
+import {reverseArray,getJsonData,getData,postJsonData} from "../../../public/js/basic.js";
 import config from "../../../public/js/basic.js";
 import ProTable from '@ant-design/pro-table';
 
-//import srtJson from "../../../../db/srt.json";//目前是本地加载
 import zhCN from 'antd/lib/locale/zh_CN';
-import { useIntl, FormattedMessage } from 'umi';
-//dbUrl = "../../../../db/";
-// import searchJson from "../../../../db/2021/search.json";
-// import mainJson from "../../../../db/2021/main.json";
-// import indexerList from "../../../../db/2021/indexer.json";
-// import srtJson from "../../../../db/srt.json";
-//本地加载也不失为一种办法，但坏处是每次都要在本地进行更新
-
-const CheckboxGroup = Checkbox.Group;
-const Panel = Collapse.Panel;
-const { Meta } = Card;
 const {Title,Text} = Typography;
 
 const sourceUrl = config.sourceUrl;
@@ -255,18 +243,14 @@ class SubtitlePage extends React.Component{
   }
   handleSearch = (searchWords)=>{
     this.setState({searchWords:searchWords});
-    let newDatasrc = [];
-    for(let data of this.props.initDatasrc){
-      let bv = data["bv"];
-      let subtitles;
-      try{
-        subtitles = searchJson[bv]["srt"];
-      }catch{
-        continue;
-      }
-      
-      
-      if(subtitles.toLowerCase().indexOf(searchWords.toLowerCase())!== -1)  newDatasrc.push(data);
+    let para = {"words":searchWords};
+    let newDatasrc;
+    try{
+      newDatasrc = postJsonData(config.queryAPI,para);
+    } catch(e){
+      newDatasrc = this.props.initDatasrc;
+      message.error("搜索失败")
+      console.error("post request failed!");
     }
     this.setState({dataSource:newDatasrc});
   }

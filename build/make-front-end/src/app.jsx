@@ -17,7 +17,7 @@ export const initialStateConfig = {
  * */
 export const layout = ({ initialState }) => {
   return {
-    iconfontUrl:"//at.alicdn.com/t/font_2756813_bljm09tdmqk.js",
+    iconfontUrl:"//at.alicdn.com/t/font_2756813_ab2nb5ecoyd.js",
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
