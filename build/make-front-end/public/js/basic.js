@@ -56,80 +56,8 @@
     "title": []
 }
 */
-
-const sourceUrls = 
-    [
-    "https://livedb.asoulfan.com",
-    "https://raw.githubusercontent.com/A-Soul-Database/A-Soul-Data/main",
-    "https://cdn.jsdelivr.net/gh/A-Soul-Database/A-Soul-Data@latest",
-    "https://gitee.com/lairq/A-Soul-Data/raw/main"
-    ]
-
-const queryPort = "8001";
-const queryAPI = "http://110.42.138.63:"+queryPort+"/sub_search";
-const urlChoice = 2;
-export default {
-    RunOnLocal:urlChoice !== 1,//当urlChoice不为0时，说明工程在本地跑
-    sourceUrl:sourceUrls[urlChoice],
-    queryAPI: queryAPI,
-}
-
-
 const insertionJustable = ["scene","staff","type","platform"]//可以用相交法判断的关键字数组
 //2022-1-2:平台格式变化，由原来的单字符“B”变为字符串数组
-
-// export function match(queryJson,json){
-//     for(let keyword in queryJson){
-//         if(keyword === "skin"){
-//             let skinSet = new Set();//存储所有衣服，去重
-//             for(let s of json["staff"]){
-//                 if(s === "F") continue;//可怜的阿草，没有衣服，我真的，哭死
-//                 for(let cloth of json["skin"][s]){
-//                     skinSet.add(cloth);
-//                 }
-//             }
-//             let skinArr = Array.from(skinSet);
-//             if(skinArr.length === 0) continue;
-//             if(!isInsertion(queryJson["skin"],skinArr)){
-//                 // console.log("skin not match");
-//                 return false;
-//             }
-//         }else if(keyword === "platform"){
-//             if(queryJson["platform"].indexOf(json["platform"])===-1){
-                
-//                 // console.log("platform not match");
-//                 return false;
-//             }//json里的platform并非数组，而是一个字符，B或者D
-//         }else if(insertionJustable.indexOf(keyword)!==-1){
-//             if(!isInsertion(queryJson[keyword],json[keyword])){
-//                 // console.log("insert not match");
-//                 return false;
-//             }
-//         }else if(keyword === "titlestr"){
-//             if(json["title"].indexOf(queryJson[keyword]) !== -1){
-//                 return true;
-//             }
-//         }else if(keyword === "tagstr"){
-//             for(let tag of json["tags"]){
-//                 if(tag.indexOf(queryJson[keyword]) !== -1){
-//                     return true;
-//                 }
-//             }
-//         }else if(keyword === "typestr"){
-//             for(let arr of json["items"]){
-//                 for(let i of arr["item"]){
-//                     if(i[0].indexOf(queryJson[keyword]) !== -1){
-//                         return true;
-//                     }
-//                 }
-//             }
-//         }else{
-//             continue;
-//         }
-//     }
-    
-//     return false;
-// }
 
 export function match(queryJson,json){
     
@@ -216,12 +144,22 @@ export function postJsonData(url,para){ //para是一个dict
 }
 
 export function getData(url){
-    //通过XMLHttpRequest获取cdn中的版本,同步阻塞式
+    //通过XMLHttpRequest发送http请求,同步阻塞式
     var xhr = new XMLHttpRequest();
     xhr.open("GET",url,false);
     xhr.send(null);
+    
     let r;
-    try{r = xhr.responseText;}catch(e){r = "error http"}finally{return r}
+    
+    if(xhr.status !== 200){
+        throw xhr.status;
+    };
+    try{r = xhr.responseText;}catch(e){
+        r = "error http";
+        throw r;
+    }finally{
+        return r
+    }
 }
 export function reverseArray(array){
     let res = [];

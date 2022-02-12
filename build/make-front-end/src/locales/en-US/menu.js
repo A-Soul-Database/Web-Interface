@@ -49,4 +49,8 @@ export default {
   'menu.editor.flow': 'Flow Editor',
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
+  // 'menu.主页': "Index",
+  // 'menu.视频库': "List",
+  // 'menu.字幕库': "Subtitles",
+  // 'menu.分段下载': "Range",
 };

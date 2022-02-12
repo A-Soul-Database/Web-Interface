@@ -4,7 +4,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Alert, Typography,Avatar,Row,Col,Checkbox,Collapse, Space,Modal,List, Divider,Button,Option,Select,Input } from 'antd';
 import { InfoCircleOutlined, UndoOutlined, ClearOutlined, SearchOutlined } from '@ant-design/icons';
 import {match,reverseArray,getJsonData} from "../../../public/js/basic.js";
-import config from "../../../public/js/basic.js";
+import {config} from "../../../config/custom_config.js";
 import Highlighter from 'react-highlight-words';
 
 

@@ -1,130 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Typography,Avatar,Row,Col,Checkbox,Collapse,Table,Input, Button,Modal, ConfigProvider,message } from 'antd';
 import { InfoCircleOutlined, UndoOutlined, ClearOutlined, SearchOutlined,CaretUpFilled,CaretDownFilled } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import {reverseArray,getJsonData,getData,postJsonData} from "../../../public/js/basic.js";
-import config from "../../../public/js/basic.js";
+import {config} from "../../../config/custom_config.js";
 import ProTable from '@ant-design/pro-table';
-
-import zhCN from 'antd/lib/locale/zh_CN';
 const {Title,Text} = Typography;
 
-const sourceUrl = config.sourceUrl;
-
-let Year_Index_Json = getJsonData(sourceUrl+"/db/main.json"); //年度的main.json 索引
-const years = Year_Index_Json.LiveClip;
-let MainUrl = "";
-let searchUrl = "";
-let indexerUrl = "";
-let indexerList = [];
-let mainJson = [];
-let searchJson = [];
-for(let year_Item of years){
-    MainUrl = sourceUrl+"/db/"+year_Item+"/main.json";
-    searchUrl = sourceUrl+"/db/"+year_Item+"/search.json";
-    indexerUrl = sourceUrl+"/db/"+year_Item+"/indexer.json";
-    mainJson = mainJson.concat(getJsonData(MainUrl));
-    indexerList = indexerList.concat(getJsonData(indexerUrl));
-    searchJson = Object.assign(searchJson,getJsonData(searchUrl));
-}
-console.log(searchJson);
-/*
-let searchJson = getJsonData(sourceUrl+"/db/2021/search.json");
-let mainJson = getJsonData(sourceUrl+"/db/2021/main.json");
-let indexerList = getJsonData(sourceUrl+"/db/2021/indexer.json");
-*/
+// const sourceUrl = config.sourceUrl;
 const highlightColor = "yellow";
 
-function PurifyYear(a){return "20"+a;} // 文件目录是2022 , main.json 是22
+// function PurifyYear(a){return "20"+a;} // 文件目录是2022 , main.json 是22
 
 function getSubtitles(bv){
   //TODO:加强鲁棒性
-  let index = indexerList.indexOf(bv);
-  if(mainJson[index]["bv"] != bv){
-    console.error("indexer.json don't match mainJson in bv fileds, index: "+index);
-    return new Array();
-  }
-  let clip = 1;
-  let month = "";
-  let year = "";
-  try{
-    clip = parseInt(mainJson[index]["clip"]);
-    month = mainJson[index]["date"].split("-")[1];
-    year = PurifyYear("21"); //默认2021
-    if(mainJson[index]["date"].split("-").length === 3){
-      month = mainJson[index]["date"].split("-")[1]; //对于跨年数据,Main.json对其日期从 12-01 修改为了 21-12-01 所以这里要判断一下月份,否则请求404
-      year = PurifyYear(mainJson[index]["date"].split("-")[0]);
+  let data = getJsonData(config.SubtitlesAPI+"?bv="+bv).data;
+  console.log(data);
+  for(let n=0;n < data.sources.length;n++){
+    let source = data["sources"][n];
+    console.log("try source:"+source);
+    try{
+      let subtitles = Array(data.url.length);
+      for(let i=0;i<data.url.length;i++) subtitles[i] = [];
+      for(let clip =0;clip < data.url.length;clip++){
+        let partUrl = data.url[clip];
+        let url = source + partUrl;
+        
+        let srt = "";
+        try{
+          srt = getData(url);
+        }catch(error){
+          console.error("getSubtitles fail, status:"+error.toString());
+          throw(source);
+        }
+        let srtArr = srt.split("\n");
+        for(let j=0;j<srtArr.length-2;j+=4){
+          let subtitle = srtArr[j]+"|"+srtArr[j+1]+"|"+srtArr[j+2];
+          subtitles[clip].push(subtitle);
+        }
+      }
+      return subtitles;
+    }catch(error){
+      console.warn("source: "+source+" cannnot be used, try next source");
+      continue;
     }
-  }catch{
-    console.error("clip and month parse fault in bv: "+bv);
   }
-  if(month === "" || clip === 0) return new Array();
-  if(month.length===1){month="0"+month};
-
-  let subtitles = new Array(clip);
-  for(let i=0;i<clip;i++) subtitles[i] = [];
-  if(clip===1){
-      let srt = "";
-      let url = sourceUrl+"/db/"+year+"/"+month+"/srt/"+bv+".srt";
-      try{
-        srt = getData(url);
-      }catch{
-        console.error("Get subtitles fault on url: "+url);
-        subtitles[0].push("||");
-        return subtitles;
-      }
-      
-      let srtArr = srt.split("\n");
-      for(let i=0;i<srtArr.length-2;i+=4){
-        let subtitle = srtArr[i]+"|"+srtArr[i+1]+"|"+srtArr[i+2];
-        subtitles[0].push(subtitle);
-      }
-  }else{
-      for(var i =1;i<clip+1;i++){
-          let srt = "";
-          let url = sourceUrl+"/db/"+year+"/"+month+"/srt/"+bv+"-"+i.toString()+".srt";
-          try{
-            srt = getData(url);
-          }catch{
-            console.error("Get subtitles fault on url: "+url);
-            subtitles[i-1].push("||");
-            continue;
-          }
-          
-          let srtArr = srt.split("\n");
-          for(let j=0;j<srtArr.length-2;j+=4){
-            let subtitle = srtArr[j]+"|"+srtArr[j+1]+"|"+srtArr[j+2];
-            subtitles[i-1].push(subtitle);
-          }
-      }
-  }
+  console.error("All sources cannot be used!");
+  let subtitles = Array(data.url.length);
+  for(let i=0;i<data.url.length;i++) subtitles[i] = [];
   return subtitles;
 }
-
-let tableListDataSource = [];
-
-for(let n in mainJson){
-  let title;
-  let bv;
-  let date;
-  let hour;
-
-  
-  try{
-    title = mainJson[n]["title"];
-    bv = mainJson[n]["bv"];
-    date = mainJson[n]["date"];
-    hour = mainJson[n]["time"];
-  }catch{
-    console.error("mainJson parse fault for n: "+n);
-  }
-  
-
-  tableListDataSource.push({key:n,date:date,hour:hour,bv:bv,title:title});
-}
-// console.log(tableListDataSource);
-tableListDataSource = reverseArray(tableListDataSource);
 
 const columns = [
   {
@@ -237,22 +163,40 @@ class SubtitlePage extends React.Component{
     searchWords:"",
     currentID:0
   }
+  componentDidUpdate(){
+    const {reRender, parent, initDatasrc} = this.props;
+    if(reRender){
+      this.setState({dataSource:initDatasrc});
+      parent.setState({reRender:false});
+    }
+  }
   handleCancel = ()=>{
     this.scrollTop();
     this.setState({isModalVisible:false,currentID:0});
   }
   handleSearch = (searchWords)=>{
     this.setState({searchWords:searchWords});
-    let para = {"words":searchWords};
-    let newDatasrc;
-    try{
-      newDatasrc = postJsonData(config.queryAPI,para);
-    } catch(e){
-      newDatasrc = this.props.initDatasrc;
-      message.error("搜索失败")
-      console.error("post request failed!");
-    }
-    this.setState({dataSource:newDatasrc});
+    fetch(`${config.queryAPI}`,{
+      method : "POST",
+      headers : {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "words":searchWords
+      })
+    }).then(
+      (response)=>{
+        response.json().then((data)=>{
+          this.setState({dataSource:data});
+          let len = data.length;
+          message.info("共"+len.toString()+"条搜索结果已展示");
+        });
+      }
+      ,(error)=>{
+        console.error(error);
+        message.error("字幕库搜索失败");
+      }
+      );
   }
   handleReverse(){
     let newDatasrc = reverseArray(this.state.dataSource);
@@ -391,16 +335,65 @@ class SubtitlePage extends React.Component{
   }
 }
 
-export default () => {
-    
+class Subtitle extends React.Component{
+
+  state = {
+    mainJson: [],
+    indexerList: [],
+    reRender:false,
+  }
+
+  cancelRerender(){
+    this.setState({reRender:false});
+    console.log("已取消");
+  }
+
+  componentDidMount(){
+    fetch(config.MainJsonAPI).then((response)=>
+      response.json().then(
+        (data)=>{
+          this.setState({
+            mainJson:data.data,
+            reRender:true
+          });
+          console.log("mainJson获取成功");
+        }
+      )
+      ,(error)=>{
+        console.error(error);
+      });
+  };
+  
+  
+  render(){
+    const {mainJson,reRender} = this.state;
+    let tableListDataSource = [];
+
+    for(let n in mainJson){
+      let title;
+      let bv;
+      let date;
+      let hour;
+      try{
+        title = mainJson[n]["title"];
+        bv = mainJson[n]["bv"];
+        date = mainJson[n]["date"];
+        hour = mainJson[n]["time"];
+      }catch{
+        console.error("mainJson parse fault for n: "+n);
+      }
+      tableListDataSource.push({key:n,date:date,hour:hour,bv:bv,title:title});
+    }
+    tableListDataSource = reverseArray(tableListDataSource);
     const subPageProps = {
       initColumns:columns,
-      initDatasrc:tableListDataSource
+      initDatasrc:tableListDataSource,
+      reRender:reRender,
+      parent:this,
     }
-    return (
-      <ConfigProvider locale={zhCN}>
-        
-        <SubtitlePage {...subPageProps}/>
-      </ConfigProvider>
-    );
-};
+    
+    return (<SubtitlePage {...subPageProps} /> );
+  }
+}
+
+export default Subtitle;

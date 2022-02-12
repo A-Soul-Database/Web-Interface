@@ -1,9 +1,8 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Alert, Typography,Row,Col, Button } from 'antd';
-import { useIntl, FormattedMessage } from 'umi';
-import {TableOutlined,createFromIconfontCN, ProfileOutlined, PlayCircleOutlined} from '@ant-design/icons';
-import config from "../../../public/js/basic.js";
+import {createFromIconfontCN, ProfileOutlined, PlayCircleOutlined} from '@ant-design/icons';
+import {config} from "../../../config/custom_config.js";
 const {Text,Title}  = Typography;
 const IconFont = createFromIconfontCN({
   scriptUrl: "//at.alicdn.com/t/font_2756813_9ml228rpprq.js",
@@ -16,7 +15,6 @@ if(!RunOnLocal){
 
 
 export default () => {
-  // const intl = useIntl();
   const [colorOne,setColorOne] = React.useState("#737373");
   const [colorTwo,setColorTwo] = React.useState("#737373");
   const [colorThree,setColorThree] = React.useState("#737373");
