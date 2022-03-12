@@ -21,6 +21,15 @@ const GlobalHeaderRight = () => {
       <Menu.Item key="4">
         <a target="_blank" href="https://asoulwiki.com/">一个魂维基</a>
       </Menu.Item>
+      <Menu.Item key="5">
+        <a target="_blank" href="https://nf.asoul-rec.com/">A-Soul <b>原画</b>录播站</a>
+      </Menu.Item>
+      <Menu.Item key="6">
+        <a target="_blank" href="https://www.asoulworld.com/">A-Soul 导航站</a>
+      </Menu.Item>
+      <Menu.Item key="7">
+        <a target="_blank" href="https://studio.asf.ink/">A-Soul 录音棚</a>
+      </Menu.Item>
     </Menu>
   );
   return (

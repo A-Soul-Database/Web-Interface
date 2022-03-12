@@ -349,7 +349,7 @@ class Subtitle extends React.Component{
   }
 
   componentDidMount(){
-    fetch(config.MainJsonAPI).then((response)=>
+    fetch(config.MainJsonAPI+"?brief=true").then((response)=>
       response.json().then(
         (data)=>{
           this.setState({

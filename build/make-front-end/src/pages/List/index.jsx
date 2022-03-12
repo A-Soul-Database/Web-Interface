@@ -2,8 +2,8 @@ import React from 'react';
 import { ReactDOM,findDOMNode } from 'react-dom';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Alert, Typography,Avatar,Row,Col,Checkbox,Collapse, Space,Modal,List, Divider,Button,Option,Select,Input } from 'antd';
-import { InfoCircleOutlined, UndoOutlined, ClearOutlined, SearchOutlined } from '@ant-design/icons';
-import {match,reverseArray,getJsonData} from "../../../public/js/basic.js";
+import { InfoCircleOutlined, UndoOutlined, ClearOutlined, SearchOutlined, ConsoleSqlOutlined } from '@ant-design/icons';
+import {match,reverseArray,getJsonData,postJsonData} from "../../../public/js/basic.js";
 import {config} from "../../../config/custom_config.js";
 import Highlighter from 'react-highlight-words';
 
@@ -55,7 +55,7 @@ const typeMap = {"song":"🎤","chat":"💬","game":"🎮️","birthday":"🎂",
 const typeMapStr = {"song":"唱歌","chat":"杂谈","game":"游戏","birthday":"生日会","theater":"小剧场","dance":"跳舞","vertical":"竖屏"};
 const avatar = {"A":"./avatars/a.jpg","B":"./avatars/b.jpg","C":"./avatars/c.jpg","D":"./avatars/d.jpg","E":"./avatars/e.jpg","F":"./avatars/f.jpg"};
 const staffMap = {"A":"向晚","B":"贝拉","C":"珈乐","D":"嘉然","E":"乃琳","F":"阿草"};
-const sceneMap = {"show":"展台","domroom":"客厅","spaceship":"太空船","ktv":"ktv","sky":"天空湖","Eroom":"乃琳房间","Aroom":"向晚房间","Droom":"嘉然房间","rooftop":"天台","beach":"海滩","classroom":"教室","singroom":"录音室","danceroom":"练舞房","filmstudio":"摄影棚","seaworld":"海底世界","broadcastroom":"演播室","YUEHUA":"乐华现场","DouNight":"抖音奇妙夜","LegendWorld":"传说的世界","pinky":"嘉然百万粉直播","BlossomTreeLake":"花树湖"};
+const sceneMap = {"show":"展台","domroom":"客厅","spaceship":"太空船","ktv":"ktv","sky":"天空湖","Eroom":"乃琳房间","Aroom":"向晚房间","Droom":"嘉然房间","rooftop":"天台","beach":"海滩","classroom":"教室","singroom":"录音室","danceroom":"练舞房","filmstudio":"摄影棚","seaworld":"海底世界","broadcastroom":"演播室","YUEHUA":"乐华现场","DouNight":"抖音奇妙夜","LegendWorld":"传说的世界","pinky":"嘉然百万粉直播","BlossomTreeLake":"花树湖","BlossomTreeRoom":"花树阁"};
 const skinMap = {"swim":"泳装","official":"官方","sport":"运动服(贝拉)","jk":"jk(贝拉)","chinese":"古风旗袍(嘉然)","group":"团服","birthday":"生日会服装","sleep":"睡衣","christmas":"圣诞服","year":"新年装","DianaOfficialBlue":"蓝色常服(嘉然)","JinLing":"金陵","LegendWorld":"传说的世界","creamy":"香草(嘉然百万粉)","DailySuit":"常服","22Birthday":"生日服(2022)"};
 const platformMap = {"B":"B站","D":"抖音"}
 const toolMap = {"staff":["出镜人物",staffMap],"skin":["服饰",skinMap],"scene":["出场场景",sceneMap],"platform":["平台",platformMap],"type":["活动",typeMapStr]};
@@ -260,6 +260,9 @@ class ToolKits extends React.Component{
         <Col xs={24} md={24}>
         <Collapse>
           <Panel header="高级搜索" forceRender={true}>
+          <Card>
+          筛选阿草时也许需要把其他的Item都取消选择...🙇‍♀️
+          </Card>
           <MyCheckbox {...staffConfig} bindRef={(p)=>this.staff=p}></MyCheckbox>
           <MyCheckbox {...sceneConfig} bindRef={(p)=>this.scene=p}></MyCheckbox>
           <MyCheckbox {...activityConfig} bindRef={(p)=>this.activity=p}></MyCheckbox>
@@ -505,10 +508,21 @@ class ListPage extends React.Component{
   
   //查找捏
   filter(queryJson){
-    let newJson = [];
-    for(let json of this.props.initMainJson){
-      if(match(queryJson,json)) newJson.push(json);
+    var acquire_dict = {}
+    for (let k in queryJson){
+      console.log("asb",k,queryJson[k])
+      if(queryJson[k].length===0){
+        continue;
+      }
+      else{
+        console.log("add",k,queryJson[k])
+        acquire_dict[k] = queryJson[k];
+      }
     }
+    acquire_dict.keywords = acquire_dict.tagstr;
+    acquire_dict.reverse = 1;
+    let newJson = [];
+    newJson =  postJsonData(config.FliterApi,acquire_dict).data;
     this.setState({displayJson:newJson});
   }
 
