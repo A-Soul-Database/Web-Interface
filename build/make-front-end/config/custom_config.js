@@ -11,7 +11,7 @@ const queryAPI = "https://apihk.asdb.live/Api/Subtitle_Search/sub_search";
 const urlChoice = 0;
 const APIHost = "https://apihk.asdb.live/Api/List_Json/V1";// https://github.com/A-Soul-Database/API/tree/master/Main-Api 的API，用于获取json文件
 export const config =  {
-    RunOnLocal:urlChoice !== 3,//当urlChoice不为0时，说明工程在本地跑
+    RunOnLocal:urlChoice !== 0,//当urlChoice不为0时，说明工程在本地跑
     sourceUrl:sourceUrls[urlChoice],
     queryAPI: queryAPI,
     FliterApi:APIHost+"/Main_Fliter",
