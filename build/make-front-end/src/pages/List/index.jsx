@@ -56,9 +56,9 @@ const typeMapStr = {"song":"唱歌","chat":"杂谈","game":"游戏","birthday":"
 const avatar = {"A":"./avatars/a.jpg","B":"./avatars/b.jpg","C":"./avatars/c.jpg","D":"./avatars/d.jpg","E":"./avatars/e.jpg","F":"./avatars/f.jpg"};
 const staffMap = {"A":"向晚","B":"贝拉","C":"珈乐","D":"嘉然","E":"乃琳","F":"阿草"};
 const sceneMap = {"show":"展台","domroom":"客厅","spaceship":"太空船","ktv":"ktv","sky":"天空湖","Eroom":"乃琳房间","Aroom":"向晚房间","Droom":"嘉然房间","rooftop":"天台","beach":"海滩","classroom":"教室","singroom":"录音室","danceroom":"练舞房","filmstudio":"摄影棚","seaworld":"海底世界","broadcastroom":"演播室","YUEHUA":"乐华现场","DouNight":"抖音奇妙夜","LegendWorld":"传说的世界","pinky":"嘉然百万粉直播","BlossomTreeLake":"花树湖","BlossomTreeRoom":"花树阁"};
-const skinMap = {"swim":"泳装","official":"官方","sport":"运动服(贝拉)","jk":"jk(贝拉)","chinese":"古风旗袍(嘉然)","group":"团服","birthday":"生日会服装","sleep":"睡衣","christmas":"圣诞服","year":"新年装","DianaOfficialBlue":"蓝色常服(嘉然)","JinLing":"金陵","LegendWorld":"传说的世界","creamy":"香草(嘉然百万粉)","DailySuit":"常服","22Birthday":"生日服(2022)"};
+const skinMap = {"swim":"泳装","official":"官方","sport":"运动服(贝拉)","jk":"jk","chinese":"古风旗袍(嘉然)","group":"团服","birthday":"生日会服装","sleep":"睡衣","christmas":"圣诞服","year":"新年装","DianaOfficialBlue":"蓝色常服(嘉然)","JinLing":"金陵","LegendWorld":"传说的世界","creamy":"香草(嘉然百万粉)","DailySuit":"常服","22Birthday":"生日服(2022)"};
 const platformMap = {"B":"B站","D":"抖音"}
-const toolMap = {"staff":["出镜人物",staffMap],"skin":["服饰",skinMap],"scene":["出场场景",sceneMap],"platform":["平台",platformMap],"type":["活动",typeMapStr]};
+const toolMap = {"staff":["出镜成员",staffMap],"skin":["服饰",skinMap],"scene":["出场场景",sceneMap],"platform":["平台",platformMap],"type":["活动",typeMapStr]};
 
 
 class MyCheckbox extends React.Component{
@@ -261,7 +261,9 @@ class ToolKits extends React.Component{
         <Collapse>
           <Panel header="高级搜索" forceRender={true}>
           <Card>
-          筛选阿草时也许需要把其他的Item都取消选择...🙇‍♀️
+          <p>筛选Tips:</p>
+          <p>筛选特定条目时尽量取消选择其他条目🙇‍♀️</p>
+          <p>例如: 在<b>仅筛选成员时把其他条目的全选取消勾选</b></p>
           </Card>
           <MyCheckbox {...staffConfig} bindRef={(p)=>this.staff=p}></MyCheckbox>
           <MyCheckbox {...sceneConfig} bindRef={(p)=>this.scene=p}></MyCheckbox>
@@ -428,7 +430,7 @@ class AvatarCard extends React.Component{
             dataSource={this.skinToskinData()}
             header={
               <Row>
-                <Col md={22}><b>出镜人物</b></Col>
+                <Col md={22}><b>出镜成员</b></Col>
                 <Col><b align="right">服饰</b></Col>
               </Row>
             }
@@ -454,7 +456,7 @@ class AvatarCard extends React.Component{
         <Row style={{"height":"20px","borderBottom":"1px solid"}}>
           <Col md={4}><b>时间</b></Col>
           <Col md={11}><b>活动</b></Col>
-          <Col ><b>出镜人物</b></Col>
+          <Col ><b>出镜成员</b></Col>
         </Row>
         {items.map((i)=>{
           return i.item.map((it)=>{return this.itemToReactNode(it,i.name,bv)});
