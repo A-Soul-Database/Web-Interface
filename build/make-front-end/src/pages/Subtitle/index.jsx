@@ -146,6 +146,9 @@ class ToolKits extends React.Component{
         <Col md={6} align="middle">
         </Col>
         </Row>
+        <Card>
+      <b style={{"float":"left","margin":"1rem","fontSize":"1.5rem"}}>致A-SOUL运营委员会的声明</b><a href="https://t.bilibili.com/658648606533746724" style={{"float":"right","margin":"1rem","fontSize":"1.5rem"}}>点此查看</a>
+      </Card>
       </Card>
       
     );

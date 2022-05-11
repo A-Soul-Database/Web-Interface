@@ -20,7 +20,6 @@ const IconFont = createFromIconfontCN({
             <Col md={4} align="middle"><a href="https://space.bilibili.com/351609538/"><li>珈乐Carol</li></a></Col>
             <Col md={4} align="middle"><a href="https://space.bilibili.com/672328094/"><li>嘉然Diana</li></a></Col>
             <Col md={4} align="middle"><a href="https://space.bilibili.com/672342685/"><li>乃琳Eileen</li></a></Col>
-            <Col md={4} align="middle"><a href="https://space.bilibili.com/703007996/"><li>阿草Furry😋</li></a></Col>
           </Row>
         <Title level={1} align="middle" style={{"marginTop":"50px"}}>关于我们</Title>
         
