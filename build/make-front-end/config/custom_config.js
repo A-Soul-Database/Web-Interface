@@ -1,9 +1,7 @@
 const sourceUrls = 
     [
-    "https://livedb.asoulfan.com",
-    "https://raw.githubusercontent.com/A-Soul-Database/A-Soul-Data/main",
-    "https://cdn.jsdelivr.net/gh/A-Soul-Database/A-Soul-Data@latest",
-    "https://gitee.com/lairq/A-Soul-Data/raw/main"
+    "https://maindata.a-soul-database.vercel.app",
+    "https://cdn.jsdelivr.net/gh/A-Soul-Database/A-Soul-Data@latest"
     ]
 
 const queryPort = "8001";

@@ -22,9 +22,6 @@ export default () => {
     <PageContainer>
       <Title align="middle" >Asoul二创切片的有力助手，免费且开源</Title>
       <Row><Col xs={8} md={16}></Col><Col><Title level={3} type="secondary">--把字刻在石头上</Title></Col></Row>
-      <Card>
-      <b style={{"float":"left","margin":"1rem","fontSize":"1.5rem"}}>致A-SOUL运营委员会的声明</b><a href="https://t.bilibili.com/658648606533746724" style={{"float":"right","margin":"1rem","fontSize":"1.5rem"}}>点此查看</a>
-      </Card>
       <Row 
         style={{
           "height":"300px",
