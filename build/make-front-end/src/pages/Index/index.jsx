@@ -10,7 +10,7 @@ const IconFont = createFromIconfontCN({
 const RunOnLocal = config.RunOnLocal;
 let basicHref="";
 if(!RunOnLocal){
-  basicHref="/web/index.html";
+  basicHref="";
 }
 
 
@@ -82,11 +82,11 @@ export default () => {
             <Row><Col align="middle" span={24}>进入字幕库</Col></Row>
           </Button>
         </Col>
-        {/* <Col xs={24} md={12} align="middle">
+        { <Col xs={24} md={12} align="middle">
           <Button
             onMouseEnter={(e)=>{setColorTwo("#D9D9D9")}}
             onMouseLeave={(e)=>{setColorTwo("#737373")}}
-            href={"https://livedb.asoulfan.com/rangeDownload/index.html"}
+            href={"https://rd.asdb.live"}
             style={{
               "borderRadius":"20px",
               "width":"300px",
@@ -105,9 +105,9 @@ export default () => {
                   }}/>
               </Col>
             </Row>
-            <Row><Col align="middle" span={24}>视频分段下载</Col></Row>
+            <Row><Col align="middle" span={24}>旧版分段下载</Col></Row>
           </Button>
-        </Col> */}
+        </Col> }
 
       </Row>
       <Row 
